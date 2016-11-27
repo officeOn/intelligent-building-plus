@@ -1,0 +1,22 @@
+{
+    "measurements": {
+        "measurements": null,
+        "self": "https://tieto.iottc.tieto.com/measurement/measurements"
+    },
+    "measurementsForDate": "https://tieto.iottc.tieto.com/measurement/measurements?dateFrom={dateFrom}&dateTo={dateTo}",
+    "measurementsForDateAndFragmentType": "https://tieto.iottc.tieto.com/measurement/measurements?dateFrom={dateFrom}&dateTo={dateTo}&fragmentType={fragmentType}",
+    "measurementsForDateAndFragmentTypeAndType": "https://tieto.iottc.tieto.com/measurement/measurements?dateFrom={dateFrom}&dateTo={dateTo}&fragmentType={fragmentType}&type={type}",
+    "measurementsForDateAndType": "https://tieto.iottc.tieto.com/measurement/measurements?dateFrom={dateFrom}&dateTo={dateTo}&type={type}",
+    "measurementsForFragmentType": "https://tieto.iottc.tieto.com/measurement/measurements?fragmentType={fragmentType}",
+    "measurementsForFragmentTypeAndType": "https://tieto.iottc.tieto.com/measurement/measurements?fragmentType={fragmentType}&type={type}",
+    "measurementsForSource": "https://tieto.iottc.tieto.com/measurement/measurements?source={source}",
+    "measurementsForSourceAndDate": "https://tieto.iottc.tieto.com/measurement/measurements?source={source}&dateFrom={dateFrom}&dateTo={dateTo}",
+    "measurementsForSourceAndDateAndFragmentType": "https://tieto.iottc.tieto.com/measurement/measurements?source={source}&dateFrom={dateFrom}&dateTo={dateTo}&fragmentType={fragmentType}",
+    "measurementsForSourceAndDateAndFragmentTypeAndType": "https://tieto.iottc.tieto.com/measurement/measurements?source={source}&dateFrom={dateFrom}&dateTo={dateTo}&fragmentType={fragmentType}&type={type}",
+    "measurementsForSourceAndDateAndType": "https://tieto.iottc.tieto.com/measurement/measurements?source={source}&dateFrom={dateFrom}&dateTo={dateTo}&type={type}",
+    "measurementsForSourceAndFragmentType": "https://tieto.iottc.tieto.com/measurement/measurements?source={source}&fragmentType={fragmentType}",
+    "measurementsForSourceAndFragmentTypeAndType": "https://tieto.iottc.tieto.com/measurement/measurements?source={source}&fragmentType={fragmentType}&type={type}",
+    "measurementsForSourceAndType": "https://tieto.iottc.tieto.com/measurement/measurements?source={source}&type={type}",
+    "measurementsForType": "https://tieto.iottc.tieto.com/measurement/measurements?type={type}",
+    "self": "https://tieto.iottc.tieto.com/measurement"
+}

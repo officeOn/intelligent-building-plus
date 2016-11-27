@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Junction Challenge</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.radio/2.0.0/backbone.radio.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/3.0.0/backbone.marionette.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.js"
+	></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="js/main.js"></script>
+	
+	<script type="text/javascript" src="js/buildingHealth.js"></script>
+	<script type="text/javascript" src="js/zones.js"></script>
+	<script type="text/javascript" src="js/units.js"></script>
+
+	<script type="text/javascript" src="js/tasks.js"></script>
+
+	<script type="text/javascript" src="js/user.js"></script>
+	<script type="text/javascript" src="js/user-cleaner.js"></script>
+	
+	<script type="text/javascript" src="js/welcome.js"></script>
+	<script type="text/javascript" src="js/notify.js"></script>
+	<script type="text/javascript" src="js/breadcrumbs.js"></script>
+
+
+	<script type="text/javascript" src="js/router.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="manifest.json">
+<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body id="ib">
+	<div class="container">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Intelligence Building <sup class="text-muted">plus++</sup></a>
+			</div>
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav">
+		        <li data-id="1" data-action="account">
+		        	<a href="#">As maintenance</a></li>
+		        <li data-id="3" data-action="account">
+		        	<a href="#">As employee</a></li>
+		        <li class="dropdown hide">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="#">Action</a></li>
+		            <li><a href="#">Another action</a></li>
+		            <li><a href="#">Something else here</a></li>
+		            <li role="separator" class="divider"></li>
+		            <li><a href="#">Separated link</a></li>
+		            <li role="separator" class="divider"></li>
+		            <li><a href="#">One more separated link</a></li>
+		          </ul>
+		        </li>
+		      </ul>
+		</div>
+	</nav>
+	</div>
+	<section id="app" class="container">
+		
+	</section>
+	<footer class="container">
+		<p class="small text-muted">Created by SGK, Junction, 2016
+	</footer>
+	<script id="t-map" type="text/template">
+		
+	</script>
+	<script id="t-list-map-popup" type="text/template">
+		<%-name%>
+	</script>
+
+	<script id="t-polygon-popup" type="text/template">
+		<div class="popup-inner" data-action="navigate" data-id="<%-id%>">
+			<h4><%-name%></h4>
+			<% if (type == 'SERVICE') { %>
+				<label class="label label-primary">
+					<%-type%>
+				</label>
+			<% } else { %>
+				<label class="label label-default">
+					<%-type%>
+				</label>
+			<% } %>
+		</div>
+	</script>
+	<script id="t-app" type="text/template">
+
+		<r-breadcrumbs></r-breadcrumbs>
+		<r-content></r-content>
+		<div class="row hide">
+			<div class="col-sm-9">
+			</div>
+			<div class="about col-sm-3">
+				<r-sidebar></r-sidebar>
+			</div>
+		</div>
+		<r-notify></r-notify>
+		<r-popup></r-popup>
+	</script>
+		<script id="t-user-snippet" type="text/template">
+
+			<div class="avatar"><img src="<%-userPic%>"></div>
+			<h5><%-userName%></h5>
+			<p><b><%-balance%></b><i class="small glyphicon glyphicon-rub"></i>, Заказов: <%-totalOrders%>
+
+		</script>
+
+
+	<script id="notify-btn" type="text/template">
+		<button type="button" class="btn-material-circle-success">
+			<i class="glyphicon glyphicon-flash"></i>
+		</button>
+	</script>
+	<script id="route-btn" type="text/template">
+		<button type="button" class="btn-material-circle-primary">
+			<i class="glyphicon glyphicon-map-marker"></i>
+		</button>
+	</script>
+
+	<script id="notify-item" type="text/template">
+		<h4> <%-title%></h4>
+		<p class="help-block"><%-description%></p>
+	</script>
+
+	<script id="welcome-entry" type="text/template">
+		<r-scenarios></r-scenarios>
+		<r-roles></r-roles>
+	</script>
+	<script id="welcome-scenarios" type="text/template">
+		<div class="btn-flex">
+			<button type="button" data-go="zones" class="btn btn-iss green">
+				<i class="glyphicon glyphicon-th-large"></i>
+				<span>Zones</span>
+			</button>
+			<button type="button" data-go="tasks" class="btn btn-iss">
+				<i class="glyphicon glyphicon-list-alt"></i>
+				<span>Tasks</span>
+			</button>
+			<button type="button" data-go="user" class="btn btn-iss orange">
+				<i class="glyphicon glyphicon-user"></i>
+				<span>My page <small>[<%-app.access.name%>]</small></span>
+			</button>
+			<button type="button" data-go="" disabled class="btn btn-iss">
+				<i class="glyphicon glyphicon-play"></i>
+				<span>Plan a route</span>
+			</button>
+			<button type="button" data-go="clean" disabled class="btn btn-iss">
+				<i class="glyphicon glyphicon-time"></i>
+				<span>Cleaning&nbsp;<sup>available soon!</sup></span>
+			</button>
+			<button type="button" data-go="" disabled class="btn btn-iss">
+				<i class="glyphicon glyphicon-time"></i>
+				<span>Repair-service&nbsp;<sup>available soon!</sup></span>
+			</button>
+			<button type="button" data-go="" disabled class="btn btn-iss">
+				<i class="glyphicon glyphicon-time"></i>
+				<span>TechSupport&nbsp;<sup>available soon!</sup></span>
+			</button>
+			<button type="button" data-go="buildingHealth" class="btn btn-iss">
+				<i class="glyphicon glyphicon-home"></i>
+				<span>Building Health</span>
+			</button>
+		</div>
+	</script>
+
+	<script id="breadcrumbs-entry" type="text/template">
+		<r-crumbs></r-crumbs>
+	</script>
+	<script id="breadcrumbs-link" type="text/template">
+		<a href="#"><%-title%></a>
+	</script>
+	<script id="breadcrumbs-last" type="text/template"><%-title%>
+	</script>
+	<script id="welcome-role" type="text/template">
+		<%-name%>
+	</script>
+
+	<!-- buildingHealth -->
+	<script id="buildingHealth-tools" type="text/template">
+		<h4>Suggested tools for cleaning:</h4>
+		<ol class="tools">
+		<% for (var i in cleaningItems) { %>
+			<li><%-cleaningItems[i]%></li>
+		<% } %>
+		</ol>
+		<p class="small text-muted">You may grab these tools <span data-action="click" class="dotted">here</span>
+	</script>
+	<script id="buildingHealth-entry" type="text/template">
+		<r-map></r-map>	
+		<r-list></r-list>	
+	</script>
+	<script id="buildingHealth-listItem" type="text/template">
+		<header>
+			<h4><i class="glyphicon glyphicon-remove" data-action="close"></i><%-name%></h4>
+			<span class="status" style="color: hsla(<%-health%>,50%,50%,1)">
+				<% if (health) { %>
+					<%-health%>&thinsp;%
+				<% } else { %>
+					<i class="glyphicon glyphicon-remove text-danger"></i>
+				<% } %>
+				</span>
+		</header>
+			<div class="btn-holder" style="display:none">
+				<button type="button" data-action="trigger" data-id="map" class="btn btn-bordered-success">
+					<i class="glyphicon glyphicon-map-marker"></i>
+					Check on map
+				</button>
+				<button type="button" data-action="trigger" data-id="tools" class="btn btn-bordered-primary">
+					<i class="glyphicon glyphicon-wrench"></i>
+					See tools
+				</button>
+			</div>
+		<r-map></r-map>
+		<r-tools></r-tools>
+	</script>
+	<!-- units -->
+	<script id="units-tools" type="text/template">
+		<h4>Suggested tools for cleaning:</h4>
+		<ol class="tools">
+		<% for (var i in cleaningItems) { %>
+			<li><%-cleaningItems[i]%></li>
+		<% } %>
+		</ol>
+		<p class="small text-muted">You may grab these tools <span data-action="click" class="dotted">here</span>
+	</script>
+	<script id="units-entry" type="text/template">
+		<r-map></r-map>	
+		<r-list></r-list>	
+	</script>
+	<script id="units-listItem" type="text/template">
+		<header class="main">
+			<h4><i class="glyphicon glyphicon-remove" data-action="close"></i><%-name%></h4>
+			<span class="status" style="color: hsla(<%-health%>,50%,50%,1)">
+				<% if (health) { %>
+					<%-health%>&thinsp;%
+				<% } else { %>
+					<small class="text-muted">unknown</small>
+				<% } %>
+				</span>
+		</header>
+			<div class="btn-holder" style="display:none">
+				<button type="button" data-action="trigger" data-id="map" class="btn btn-bordered-success">
+					<i class="glyphicon glyphicon-map-marker"></i>
+					Check on map
+				</button>
+				<button type="button" data-action="trigger" data-id="tools" class="btn btn-bordered-primary">
+					<i class="glyphicon glyphicon-option-horizontal"></i>
+					Details
+				</button>
+			</div>
+			
+		<r-map></r-map>
+		<r-info></r-info>
+	</script>
+<script id="Info" type="text/template">
+	<div class="row">
+		<div class="col-sm-6">
+			<r-cleanable></r-cleanable>
+		</div>
+		<div class="col-sm-6">
+			<r-refillable></r-refillable>
+		</div>
+	</div>
+</script>
+<script id="CleanableWrapper" type="text/template">
+	<h4>Clean</h4>
+	<r-list></r-list>
+</script>
+<script id="RefillableWrapper" type="text/template">
+	<h4>Refill</h4>
+	<r-list></r-list>
+</script>
+<script id="RefillableItem" type="text/template">
+	<header class="small">
+		<h5><%-name%></h5>
+		<span class="status small" style="color: hsla(<%-count*100/countFull%>,50%,50%,1)">
+			
+				<%-count%>/<%-countFull%>
+			
+			</span>
+	</header>
+</script>
+<script id="CleanableItem" type="text/template">
+	<header class="small">
+		<h5><%-name%></h5>
+		<span class="status small" style="color: hsla(<%-health%>,50%,50%,1)">
+			
+				<%-health%>&thinsp;%
+			
+			</span>
+	</header>
+</script>
+<script id="popup" type="text/template">
+	<header>
+		<h3><%-title%></h3>
+		<i class="glyphicon glyphicon-remove" data-action="close"></i>
+	</header>
+	<section><r-content></r-content>
+	</section>
+</script>
+
+
+
+<!-- USER -->
+<!-- USER -->
+<!-- USER -->
+<!-- USER -->
+<!-- USER -->
+<!-- USER -->
+<!-- USER -->
+<!-- USER -->
+
+
+<script id="user-entry" type="text/template">
+	<r-about></r-about>
+	<r-actions></r-actions>
+</script>
+<script id="user-about" type="text/template">
+	<h2 class="user-name"><span class="hello">Welcome back,</span><br><span class="name"><%-app.access.name%>!</span></h2>
+	<div class="rating">
+	<% for (var i = 5; i >= 1; i--) { %>
+		<% if (i > rating) { %>
+			<i class="glyphicon glyphicon-star"></i>
+		<% } else { %>
+			<i class="glyphicon glyphicon-star-empty"></i>
+		<% } %>
+ 	<% } %>
+ 	</div>
+ 	<i class="glyphicon glyphicon-star super"></i>
+</script>
+<script id="loading" type="text/template">
+	<div class="cssload-square">
+		<div class="cssload-square-part cssload-square-green"></div>
+		<div class="cssload-square-part cssload-square-pink"></div>
+		<div class="cssload-square-blend"></div>
+	</div>
+</script>
+<script id="user-action" type="text/template">
+	<i class="glyphicon glyphicon-<%-icon%>"></i>
+	<span>
+		<%-title%>
+	</span>
+	<br>
+	<small class="text-muted">
+		<%=description%>
+	</small>
+</script>
+
+<script id="zones-entry" type="text/template">
+	<div class="btn-holder fixed">
+	<div class="wrapper">
+		<button type="button" data-action="back" class="btn btn-bordered-default">
+			<i class="glyphicon glyphicon-chevron-left"></i>
+			Back
+		</button>
+		<button type="button" data-action="trigger" data-id="map" class="btn btn-bordered-success">
+			<i class="glyphicon glyphicon-map-marker"></i>
+			On map
+		</button>
+		<button type="button" data-action="trigger" data-id="list" class="btn btn-bordered-primary">
+			<i class="glyphicon glyphicon-th-list"></i>
+			By list
+		</button>
+	</div>
+	</div>
+	<r-content></r-content>
+</script>
+<script id="zones-map" type="text/template">
+
+</script>
+<script id="zones-listItem" type="text/template">
+	<header>
+		<h4><%-name%></h4>
+		<% if (type == 'SERVICE') { %>
+			<label class="label label-primary">
+				<%-type%>
+			</label>
+		<% } else { %>
+			<label class="label label-default">
+				<%-type%>
+			</label>
+		<% } %>
+		<i class="glyphicon glyphicon-chevron-right"></i>
+	</header>
+</script>
+
+<script id="TaskEntry" type="text/template">
+	<h3><i class="glyphicon glyphicon-list-alt"></i> To do list</h3>
+	<r-tasks>
+		
+	</r-tasks>
+</script>
+<script id="Task" type="text/template">
+	<label class="label label-<%-state%>"><%-stateName%>
+	</label>
+	<h4><%-description%></h4>
+	<div class="actions">
+		<div class="add" data-action="add">
+			<i class="glyphicon glyphicon-plus"></i> add to route
+		</div>
+		<div class="remove hide" data-action="remove">
+			<i class="glyphicon glyphicon-minus"></i> remove
+		</div>
+	</div>
+	<p class="author">
+		created by Matt Bowie at <%-_.random(1,11)%>:<%-_.random(10,59)%>&thinsp;a.m.
+	</p>
+	<% if (highlighted) { %>
+		<i class="glyphicon glyphicon-star"></i>
+	<% } %>
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+    "name": "sgk/junction",
+    "description": "",
+    "authors": [
+        {
+            "name": "Team SGK",
+            "email": "dnl.blkv@gmail.com",
+            "role": "Owner"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "sgk\\back\\": "code/"
+        }
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.0"
+    },
+    "scripts": {
+        "post-install-cmd": [
+        ],
+        "post-update-cmd": [
+        ]
+    }
+}

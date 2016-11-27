@@ -1,0 +1,21 @@
+{
+    "task": {
+        "item_id": 1,
+        "type": "CLEAN|REFILL"
+    },
+    "item": {
+        "id": 1,
+        "name": "CoffeeMachine",
+        "health": "YELLOW",
+        "cleaning_tools": [
+            "mop",
+            "cloth",
+            "mrProper"
+        ],
+        "consumables": [
+            "coffeeBeans",
+            "cups"
+        ],
+        "coordinates": [11, 20]
+    }
+}
